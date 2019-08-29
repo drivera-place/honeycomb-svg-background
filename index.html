@@ -15,9 +15,7 @@
         fill: #fad504;
     }
 
-    /* other styling */
     svg {
-
         width: 100%;
         flex: 1;
     }
@@ -31,37 +29,27 @@
         height: 100vh;
         font-weight: 700;
         font-family: sans-serif;
-
     }
 </style>
 <script>
-
-    function Vector(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    //var points = "50,0 100,0 120,35 100,70 50,70 30,35";
-    //var points = "2,0 5,2 5,5 2,7 -1,5 -1,2";
-    var points = "5,-9 -5,-9 -10,0 -5,9 5,9 10,0";
-
-    function drawGrid() {
+    function drawHoneyComb() {
         let w3_ns = "http://www.w3.org/1999/xlink";
         let svg_ns = "http://www.w3.org/2000/svg";
         let x_offset = 0;
         let y_offset = 0;
-    
-        var width = Math.ceil(window.innerWidth / 200);
-        var height = Math.ceil(window.innerHeight / 200);
+        let counter = 0;
 
-        //console.log("width: " + width);
-        //console.log("height: " + height);
+        var width = Math.ceil(window.innerWidth / 75);
+        var height = Math.ceil(window.innerHeight / 75);
 
         var podWrap = document.getElementById("pod-wrap");
         var useNode = document.createElementNS(w3_ns, "use");
 
-        for (var i = 0; i < height; i++) {
-            for (var j = 0; j < width; j++) {
+        while(podWrap.hasChildNodes()) {
+            podWrap.removeChild(podWrap.lastChild);
+        }
+        for (var i = 0; i <= height; i++) {
+            for (var j = 0; j <= width; j++) {
                 podWrap = document.getElementById("pod-wrap");
                 useNode = document.createElementNS(svg_ns, "use");
                 useNode.setAttributeNS(w3_ns, "xlink:href", "#pod");
@@ -70,30 +58,28 @@
                 } else {
                     useNode.setAttributeNS(null, "transform", "translate(" + x_offset.toString() + ", " + (y_offset + 45).toString() + ")");
                 }
+                useNode.setAttributeNS(null, "id", (counter++).toString());
                 podWrap.appendChild(useNode);
                 x_offset = x_offset + 75;
-                console.log("x_offset: " + x_offset);
-                console.log("y_offset: " + y_offset);
             }
             x_offset = 0;
             y_offset = y_offset + 90;
         }
-       
+        console.log(counter);
     }
     window.addEventListener("load", () => {
-        drawGrid();
+        drawHoneyComb();
+    }, false);
+    window.addEventListener("resize", () => {
+        drawHoneyComb();
     }, false);
 
 </script>
 
 <body>
-    <!-- viewBox="25 25 0 0" -->
     <svg id="canvas">
-        <!-- <polygon id="polygon" /> -->
         <defs>
             <g id="pod">
-
-                <!-- <polygon stroke="#FFDF00" stroke-width="0.5" points="5,-9 -5,-9 -10,0 -5,9 5,9 10,0" /> -->
                 <polygon stroke="#FFDF00" stroke-width="1" points="25,-45 -25,-45 -50,0 -25,45 25,45 50,0" />
             </g>
         </defs>
