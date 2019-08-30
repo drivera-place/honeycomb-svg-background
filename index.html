@@ -32,11 +32,18 @@
     }
 </style>
 <script>
+    function Vector(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    
+
     function drawHoneyComb() {
+        const edgeLength = 75;
         let w3_ns = "http://www.w3.org/1999/xlink";
         let svg_ns = "http://www.w3.org/2000/svg";
-        let x_offset = 0;
-        let y_offset = 0;
+        let x_offset = 0, y_offset = 0;
         let counter = 0;
 
         var width = Math.ceil(window.innerWidth / 75);
@@ -45,7 +52,8 @@
         var podWrap = document.getElementById("pod-wrap");
         var useNode = document.createElementNS(w3_ns, "use");
 
-        while(podWrap.hasChildNodes()) {
+        // cleanning nodes on resize
+        while (podWrap.hasChildNodes()) {
             podWrap.removeChild(podWrap.lastChild);
         }
 
